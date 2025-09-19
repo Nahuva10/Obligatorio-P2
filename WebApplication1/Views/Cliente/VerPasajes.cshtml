@@ -1,0 +1,29 @@
+﻿@using Dominio;
+
+
+
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Numero de vuelo</th>
+            <th>Fecha</th>
+            <th>Equipaje</th>
+            <th>Precio</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Pasaje pas in ViewBag.pasajes)
+        {
+            @if (pas.Pasajero.Mail == Context.Session.GetString("Usuario"))
+            {
+                <tr>
+                    <td>@pas.Vuelo.NumeroDeVuelo</td>
+                    <td>@pas.Fecha</td>
+                    <td>@pas.Equip</td>
+                    <td>@pas.CostoPasaje()</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

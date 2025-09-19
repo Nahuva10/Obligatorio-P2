@@ -1,0 +1,85 @@
+﻿@using Dominio;
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert-success">
+        @TempData["Mensaje"]
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+
+
+<form method="post">
+    <label for="aeropuerto1">Seleccione Aeropuerto de salida</label>
+    <select name="aeropuerto1">
+        @foreach (Aeropuerto aeropuerto in ViewBag.aeropuertos)
+        {
+            <option value="@aeropuerto.CodigoIATA">@aeropuerto.CodigoIATA" - "@aeropuerto.Ciudad</option>
+        }
+    </select>
+    <label for="aeropuerto2">Seleccione Aeropuerto de llegada</label>
+    <select name="aeropuerto2">
+        @foreach (Aeropuerto aeropuerto in ViewBag.aeropuertos)
+        {
+            <option value="@aeropuerto.CodigoIATA">@aeropuerto.CodigoIATA" - "@aeropuerto.Ciudad</option>
+        }
+    </select>
+    <button type="submit">Buscar</button>
+</form>
+
+@if (ViewBag.vuelosPorRutas != null)
+{
+    if (ViewBag.vuelosPorRutas.Count > 0)
+    {
+        <h3>Vuelos encontrados:</h3>
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Numero de vuelo</th>
+                    <th>Ruta</th>
+                    <th>Avion</th>
+                    <th>Fecha</th>
+                    <th>Frecuencia</th>
+                    <th>Equipaje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Vuelo vue in ViewBag.vuelosPorRutas)
+                {
+                    <tr>
+                        <form method="post" action="/Cliente/ComprarPasajePorRuta">
+                        <td><input name="CodigoDeVuelo" type="text" hidden value="@vue.NumeroDeVuelo" />@vue.NumeroDeVuelo</td>
+                        <td>@vue.RutaQueCubre</td>
+                        <td>@vue.Avion</td>
+                        <td><input type="date" name="fecha" /></td>
+                        <td>@vue.MostrarFrecuencia()</td>
+                        <td>
+                            <select name="equipaje">
+                                <option value="0">LIGHT</option>
+                                <option value="1">CABINA</option>
+                                <option value="2">BODEGA</option>
+
+                            </select>
+                        </td>
+                        <td><input type="submit" value="Comprar" /></td>
+                        </form>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No se encontraron vuelos para esos aeropuertos.</p>
+    }
+}
+
+
+
+

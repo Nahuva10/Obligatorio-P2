@@ -1,0 +1,51 @@
+﻿@using Dominio;
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert-success">
+        @TempData["Mensaje"]
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Numero de vuelo</th>
+            <th>Ruta</th>
+            <th>Avion</th>
+            <th>fecha</th>
+            <th>Frecuencia</th>
+            <th>Equipaje</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Vuelo vue in ViewBag.vuelos)
+        {
+            <tr>
+                <form method="post" action="/Cliente/ComprarPasaje">
+                <td> <input name="CodigoDeVuelo" type="text" hidden value="@vue.NumeroDeVuelo" />@vue.NumeroDeVuelo</td>
+                <td>@vue.RutaQueCubre</td>
+                <td>@vue.Avion</td>
+                <td><input type="date" name="fecha" /></td>
+                <td>@vue.MostrarFrecuencia()</td>
+                <td>
+                    <select name="equipaje">
+                        <option value="0">LIGHT</option>
+                        <option value="1">CABINA</option>
+                        <option value="2">BODEGA</option>
+
+                    </select>
+                </td>
+                <td><input type="submit" value="Comprar" /></td>
+                </form>
+            </tr>
+        }
+    </tbody>
+</table>

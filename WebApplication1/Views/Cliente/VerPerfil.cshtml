@@ -1,0 +1,29 @@
+﻿@using Dominio;
+@model Cliente;
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>Mail</th>
+            <th>Cedula</th>
+            <th>Nacionalidad</th>
+            @if (ViewBag.usuarioActual is ClientePremium)
+            {
+                <th>Puntos</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+                <tr>
+            <td>@ViewBag.usuarioActual.Nombre</td>
+            <td>@ViewBag.usuarioActual.Mail </td>
+            <td>@ViewBag.usuarioActual.Cedula</td>
+            <td>@ViewBag.usuarioActual.Nacionalidad</td>
+            @if (ViewBag.usuarioActual is ClientePremium)
+            {
+                <td>@ViewBag.usuarioActual.Puntos</td>
+            }
+                </tr>
+    </tbody>
+</table>

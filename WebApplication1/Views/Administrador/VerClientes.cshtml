@@ -1,0 +1,63 @@
+﻿@using Dominio;
+@model Cliente;
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert-success">
+        @TempData["Mensaje"]
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>Cedula</th>
+            <th>Nacionalidad</th>
+            <th>Premio</th>
+            <th>Puntos</th>
+            <th>Editar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Cliente cli in ViewBag.clientes)
+        {
+            <form method="post">
+            <tr>
+                <td>@cli.Nombre</td>
+                <td><input value="@cli.Cedula" hidden name="cedula" type="text"/>@cli.Cedula</td>
+                <td>@cli.Nacionalidad</td>
+                    @if (cli is ClienteOcasional clienteOcasional)
+                    {
+                    <td>
+                        <select name="premio">
+                            <option value="true" selected="@(clienteOcasional.Premio ? "selected" : null)">Sí</option>
+                            <option value="false" selected="@(clienteOcasional.Premio ? null : "selected")">No</option>
+                        </select>
+                    </td>
+                    }
+                    else
+                    {
+                    <td></td>
+                    }
+                    @if (cli is ClientePremium clientePremium)
+                    {
+                    <td> <input name="puntos" type="text" value="@clientePremium.Puntos"/></td>
+                    }
+                    else
+                    {
+                    <td></td>
+                    }
+                <td><button type="submit">Actualizar</button></td>
+            </tr>
+            </form>
+        }
+    </tbody>
+</table>

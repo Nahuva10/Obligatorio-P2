@@ -1,0 +1,14 @@
+﻿@using Dominio;
+@model ClienteOcasional;
+@if (ViewBag.Error != null)
+{
+    <div class="alert-danger">@ViewBag.Error</div>
+}
+<form method="post">
+    <input type="text" placeholder="Ingrese mail" name="mail" /><br />
+    <input type="text" placeholder="Ingrese password" name="password" /><br />
+    <input type="text" placeholder="Ingrese cedula" name="cedula" /><br />
+    <input type="text" placeholder="Ingrese nombre" name="nombre" /><br />
+    <input type="text" placeholder="Ingrese nacionalidad" name="nacionalidad" /><br />
+    <button type="submit">Registrarse</button>
+</form>
